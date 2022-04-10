@@ -1,0 +1,15 @@
+{
+  "ghUrl": "https://github.com/laurentC35/Surprise",
+  "envs": [
+    {
+      "name": "Cloud",
+      "conf": {
+        "poguesUrl": "https://pogues.dev.insee.io",
+        "poguesBoUrl": "https://pogues-back-office.dev.insee.io",
+        "enoWsUrl": "https://eno-ws.dev.insee.io",
+        "stromaeUrl": "https://stromae-v2.dev.insee.io",
+        "queenUrl": "https://queen.dev.insee.io"
+      }
+    }
+  ]
+}
