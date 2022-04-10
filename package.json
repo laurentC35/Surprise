@@ -2,7 +2,7 @@
   "name": "surprise",
   "version": "1.2.3",
   "private": true,
-  "homepage": "https://laurentC35.github.io/surprise",
+  "homepage": "https://laurentC35.github.io/Surprise",
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
