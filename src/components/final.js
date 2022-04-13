@@ -1,17 +1,28 @@
 import { Lock } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { PhotoAlbum } from 'react-photo-album';
 import { finalText, photos } from 'utils/constants';
 
 export const Final = () => {
+  const topRef = useRef();
   const widthLayout = window.innerWidth;
   const nbColumn = widthLayout <= 590 ? 1 : 3;
 
   const [seePhoto, setSeePhoto] = useState(false);
 
+  const goToTop = () => {
+    if (topRef && topRef.current) {
+      topRef.current.tabIndex = -1;
+      topRef.current.focus();
+      topRef.current.blur();
+      window.scrollTo({ top: 0 });
+      topRef.current.removeAttribute('tabindex');
+    }
+  };
+
   return (
-    <div className="center final">
+    <div className="center final" ref={topRef}>
       <div className="fixed-icon">
         <Lock />
       </div>
@@ -29,7 +40,13 @@ export const Final = () => {
             })}
           </div>
           <br />
-          <Button variant="contained" onClick={() => setSeePhoto(true)}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              goToTop();
+              setSeePhoto(true);
+            }}
+          >
             Me remémorer ces souvenirs ...
           </Button>
         </>
