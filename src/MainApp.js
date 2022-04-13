@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Alert, Backdrop, CircularProgress, Snackbar } from '@mui/material';
+import { Alert, Backdrop, CircularProgress, Snackbar, Typography } from '@mui/material';
 import './App.css';
+import { WhoAreYou } from 'components/whoAreYou';
+import { VerifyID } from 'components/verifyId';
+import { Final } from 'components/final';
 
 export const AppContext = React.createContext();
 
@@ -11,6 +14,8 @@ function MainApp() {
 
   const [notif, setNotif] = useState(defaultNotif);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [name, setName] = useState(null);
+  const [verified, setVerified] = useState(false);
 
   const openNewNotif = ({ severity, message }) => {
     setNotif({ severity, message });
@@ -21,12 +26,23 @@ function MainApp() {
     setNotifOpen(false);
   };
 
-  const context = { loading, setLoading, openNewNotif };
+  const context = { loading, setLoading, openNewNotif, name, setName, setVerified };
 
   return (
     <>
       <AppContext.Provider value={context}>
-        <h1>Salut toi !</h1>
+        <div className="center">
+          {!name && (
+            <>
+              <Typography variant="h4">Salut toi !</Typography>
+              <WhoAreYou />
+            </>
+          )}
+          {name && <Typography variant="h4">{`Bonjour ${name} !`}</Typography>}
+        </div>
+
+        {name && !verified && <VerifyID />}
+        {name && verified && <Final />}
       </AppContext.Provider>
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 100 }} open={loading}>
         <CircularProgress color="inherit" />
@@ -35,7 +51,7 @@ function MainApp() {
         open={notifOpen}
         autoHideDuration={3000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
         <Alert onClose={handleClose} severity={notif.severity} sx={{ width: '100%' }}>
           {notif.message}
