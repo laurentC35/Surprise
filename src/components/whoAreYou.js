@@ -17,7 +17,7 @@ export const WhoAreYou = () => {
   return (
     <div className="center-wrapper">
       <form onSubmit={valid} className="whoareyou">
-        <Typography className="consigne">Pour commencer, qui êtes vous ?</Typography>
+        <Typography className="consigne">Pour commencer, comment vous appelez-vous ?</Typography>
         <TextField label="Prénom" variant="outlined" value={formName} onChange={onChange} />
         <br />
         <Button type="submit" variant="contained" className="whoareyou-button">

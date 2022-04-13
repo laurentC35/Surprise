@@ -26,3 +26,21 @@ body {
 .center {
   text-align: center;
 }
+
+.center.final button {
+  text-transform: initial;
+}
+
+.final .final-title {
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+}
+
+.center-wrapper input {
+  background-color: white;
+}
+
+.final-text-wrapper {
+  max-width: 590px;
+  margin: auto;
+}

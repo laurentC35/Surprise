@@ -11,10 +11,11 @@ const defaultNotif = { severity: 'success', message: '' };
 
 function MainApp() {
   const [loading, setLoading] = useState(false);
+  const [ready, setReady] = useState(false);
 
   const [notif, setNotif] = useState(defaultNotif);
   const [notifOpen, setNotifOpen] = useState(false);
-  const [name, setName] = useState(null);
+  const [name, setName] = useState('');
   const [verified, setVerified] = useState(false);
 
   const openNewNotif = ({ severity, message }) => {
@@ -26,7 +27,16 @@ function MainApp() {
     setNotifOpen(false);
   };
 
-  const context = { loading, setLoading, openNewNotif, name, setName, setVerified };
+  const context = {
+    loading,
+    setLoading,
+    openNewNotif,
+    name,
+    setName,
+    setVerified,
+    ready,
+    setReady,
+  };
 
   return (
     <>
@@ -34,11 +44,13 @@ function MainApp() {
         <div className="center">
           {!name && (
             <>
-              <Typography variant="h4">Salut toi !</Typography>
+              <Typography variant="h4">Bonjour à vous.</Typography>
               <WhoAreYou />
             </>
           )}
-          {name && <Typography variant="h4">{`Bonjour ${name} !`}</Typography>}
+          {name && !ready && !verified && (
+            <Typography variant="h4">{`Enchanté ${name} !`}</Typography>
+          )}
         </div>
 
         {name && !verified && <VerifyID />}

@@ -6,11 +6,11 @@ import { AppContext } from 'MainApp';
 import React, { useContext, useState } from 'react';
 import fr from 'date-fns/locale/fr';
 import { format } from 'date-fns/esm';
+import { Lock } from '@mui/icons-material';
 
 export const VerifyID = () => {
-  const { setName, openNewNotif, setVerified } = useContext(AppContext);
+  const { name, setName, openNewNotif, setVerified, ready, setReady } = useContext(AppContext);
 
-  const [ready, setReady] = useState(false);
   const [step, setStep] = useState(0);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState(false);
@@ -88,7 +88,9 @@ export const VerifyID = () => {
       {ready && step === 0 && (
         <div className="center-wrapper">
           <br />
-          <Typography variant="h5">Veuillez répondre à l'énigme suivante : </Typography>
+          <Typography variant="h5">
+            {success ? `Énigme` : `Veuillez répondre à l'énigme suivante :`}
+          </Typography>
           <br />
           <Typography>Il parle toutes les langues sans en comprendre aucune.</Typography>
           <Typography>Il loge dans les hauteurs mais jamais dans les dunes.</Typography>
@@ -152,7 +154,8 @@ export const VerifyID = () => {
             <>
               <form onSubmit={checkSoluce} className="whoareyou">
                 <Typography className="consigne">
-                  À quelle date avez-vous envoyer votre premier <b>SMS</b> à cette personne ?
+                  À quelle date et à quelle heure, avez-vous envoyer votre premier <b>SMS</b> à
+                  cette personne ?
                 </Typography>
                 <LocalizationProvider dateAdapter={AdapterDateFns} locale={fr}>
                   <DateTimePicker
@@ -189,13 +192,13 @@ export const VerifyID = () => {
       {ready && step === 2 && (
         <div className="center-wrapper">
           <br />
-          <Typography variant="h5">Impressionnant !</Typography>
+          <Typography variant="h5">{`Impressionnant ${name} !`}</Typography>
           <br />
           <Typography>Votre identité est désormais confirmée.</Typography>
 
           <br />
-          <Button variant="contained" onClick={() => setVerified(true)}>
-            Continuer
+          <Button variant="contained" onClick={() => setVerified(true)} startIcon={<Lock />}>
+            Continuer de manière sécurisé
           </Button>
         </div>
       )}
