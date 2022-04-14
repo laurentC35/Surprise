@@ -13,6 +13,7 @@ export const GoogleButton = () => {
 
   const [init, setInit] = useState(false);
   const [accessToken, setAccessToken] = useState(null);
+  const [error, setError] = useState(null);
 
   const responseGoogle = response => {
     const { accessToken, profileObj } = response;
@@ -62,13 +63,22 @@ export const GoogleButton = () => {
             const { data: joinData, errorJoin } = await joinAlbum(apiUrl)(shareToken)(accessToken);
             console.log('joinData', joinData);
             if (!errorJoin && joinData?.album?.id) await loadAlbum(joinData?.album?.id);
-            else openNewNotif({ severity: 'error', message: `Impossible de charger l'album.` });
+            else {
+              openNewNotif({ severity: 'error', message: `Impossible de charger l'album 1` });
+              setError(JSON.stringify(joinData));
+            }
           }
-        } else openNewNotif({ severity: 'error', message: `Impossible de charger l'album.` });
+        } else {
+          openNewNotif({ severity: 'error', message: `Impossible de charger l'album 2` });
+          setError(JSON.stringify(shareAlbumData));
+        }
 
         setInit(true);
         setLoading(false);
-      } else openNewNotif({ severity: 'error', message: `Impossible de charger l'album.` });
+      } else {
+        openNewNotif({ severity: 'error', message: `Impossible de charger l'album 3` });
+        setError(JSON.stringify('Pas de shared token'));
+      }
     };
     if (accessToken && !init) launch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -108,11 +118,14 @@ export const GoogleButton = () => {
         </div>
       )}
       {accessToken && (
-        <GoogleLogout
-          clientId="768407271978-7ieukafqae4qo9o7b6pmpukrchl0b0l6.apps.googleusercontent.com"
-          buttonText="Se déconnecter"
-          onLogoutSuccess={logout}
-        />
+        <>
+          <GoogleLogout
+            clientId="768407271978-7ieukafqae4qo9o7b6pmpukrchl0b0l6.apps.googleusercontent.com"
+            buttonText="Se déconnecter"
+            onLogoutSuccess={logout}
+          />
+          <Typography>{error}</Typography>
+        </>
       )}
     </>
   );
