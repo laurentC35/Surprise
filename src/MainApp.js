@@ -44,7 +44,7 @@ function MainApp() {
         <div className="center">
           {!name && (
             <>
-              <Typography variant="h4">Bonjour à vous.</Typography>
+              <Typography variant="h4">Bonjour</Typography>
               <WhoAreYou />
             </>
           )}

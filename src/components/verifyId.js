@@ -25,7 +25,7 @@ export const VerifyID = () => {
     setMessage(null);
   };
 
-  const solutions = [[`l'écho`, `écho`, `echo`], `08/05/2021 00:22`];
+  const solutions = [[`l'écho`, `écho`, `echo`, `l'echo`], `08/05/2021 00:22`];
 
   const accept = type => e => {
     if (type) setReady(true);
@@ -35,14 +35,12 @@ export const VerifyID = () => {
   const checkSoluce = e => {
     e.preventDefault();
     if (step === 0) {
-      if (solutions[step].includes(value.toLowerCase())) {
+      if (solutions[step].includes(value.toLowerCase().trim())) {
         setSuccess(true);
         setMessage(`C'est bien ça ! ( ${solutions[step][0]} )`);
-        openNewNotif({ severity: 'success', message: 'Bonne réponse !' });
       } else {
         setSuccess(false);
         setMessage(`"${value}" n'est pas la bonne réponse !`);
-        openNewNotif({ severity: 'error', message: 'Mauvaise réponse !' });
       }
     }
     if (step === 1) {
@@ -50,11 +48,9 @@ export const VerifyID = () => {
       if (strDate === solutions[step]) {
         setSuccess(true);
         setMessage(`C'est bien ça ! (${solutions[step]})`);
-        openNewNotif({ severity: 'success', message: 'Bonne réponse !' });
       } else {
         setSuccess(false);
         setMessage(`Le "${strDate}" n'est pas la bonne réponse !`);
-        openNewNotif({ severity: 'error', message: 'Mauvaise réponse !' });
       }
     }
   };
@@ -146,7 +142,7 @@ export const VerifyID = () => {
             Il est preque sûr que vous connaissiez déjà la réponse à l'énigme précédente.
           </Typography>
           <Typography>
-            D'ailleurs, il semblerait qu'une personne aie trouver la réponse avant vous.
+            D'ailleurs, il semblerait qu'une personne aie trouvé la réponse avant vous.
           </Typography>
 
           <br />
@@ -154,8 +150,8 @@ export const VerifyID = () => {
             <>
               <form onSubmit={checkSoluce} className="whoareyou">
                 <Typography className="consigne">
-                  À quelle date et à quelle heure, avez-vous envoyer votre premier <b>SMS</b> à
-                  cette personne ?
+                  À quelle date et à quelle heure, avez-vous envoyé votre premier <b>SMS</b> à cette
+                  personne ?
                 </Typography>
                 <LocalizationProvider dateAdapter={AdapterDateFns} locale={fr}>
                   <DateTimePicker
