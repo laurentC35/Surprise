@@ -38,7 +38,7 @@ export const GoogleButton = () => {
 
   const loadAlbum = useCallback(
     async albumId => {
-      const { data } = await searchMedias(apiUrl)({ albumId: albumId })(accessToken);
+      const { data } = await searchMedias(apiUrl)({ albumId: albumId, pageSize: 100 })(accessToken);
       if (data) {
         const { mediaItems } = data;
         setPhotos(createAlbumsFromResp(mediaItems));
