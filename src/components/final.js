@@ -2,9 +2,9 @@ import { Lock } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { PhotoAlbum } from 'react-photo-album';
-import { finalText, photos } from 'utils/constants';
+import { finalText } from 'utils/constants';
 
-export const Final = () => {
+export const Final = ({ photos }) => {
   const topRef = useRef();
   const widthLayout = window.innerWidth;
   const nbColumn = widthLayout <= 590 ? 1 : 3;

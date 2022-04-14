@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Backdrop, CircularProgress, Snackbar, Typography } from '@mui/material';
 import './App.css';
 import { WhoAreYou } from 'components/whoAreYou';
 import { VerifyID } from 'components/verifyId';
 import { Final } from 'components/final';
+import { GoogleButton } from 'components/AuthGoogle';
 
 export const AppContext = React.createContext();
 
@@ -17,6 +18,22 @@ function MainApp() {
   const [notifOpen, setNotifOpen] = useState(false);
   const [name, setName] = useState('');
   const [verified, setVerified] = useState(false);
+  const [photos, setPhotos] = useState(null);
+  const [shareToken, setShareToken] = useState(null);
+
+  useEffect(() => {
+    if (!shareToken) {
+      const tempShareToken = window.localStorage.getItem('shareToken');
+      if (tempShareToken) setShareToken(tempShareToken);
+      else {
+        const searchUrl = new URLSearchParams(window.location.search);
+        const newShareToken = searchUrl.get('shareToken');
+        setShareToken(newShareToken);
+        window.localStorage.setItem('shareToken', newShareToken);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shareToken]);
 
   const openNewNotif = ({ severity, message }) => {
     setNotif({ severity, message });
@@ -36,6 +53,8 @@ function MainApp() {
     setVerified,
     ready,
     setReady,
+    setPhotos,
+    shareToken,
   };
 
   return (
@@ -54,7 +73,8 @@ function MainApp() {
         </div>
 
         {name && !verified && <VerifyID />}
-        {name && verified && <Final />}
+        {name && verified && <GoogleButton />}
+        {name && verified && photos && <Final photos={photos} />}
       </AppContext.Provider>
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 100 }} open={loading}>
         <CircularProgress color="inherit" />

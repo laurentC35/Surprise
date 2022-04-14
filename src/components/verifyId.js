@@ -6,10 +6,9 @@ import { AppContext } from 'MainApp';
 import React, { useContext, useState } from 'react';
 import fr from 'date-fns/locale/fr';
 import { format } from 'date-fns/esm';
-import { Lock } from '@mui/icons-material';
 
 export const VerifyID = () => {
-  const { name, setName, openNewNotif, setVerified, ready, setReady } = useContext(AppContext);
+  const { setName, setVerified, ready, setReady } = useContext(AppContext);
 
   const [step, setStep] = useState(0);
   const [success, setSuccess] = useState(false);
@@ -179,13 +178,13 @@ export const VerifyID = () => {
           )}
           <br />
           {success && (
-            <Button variant="contained" onClick={() => changeStep(2)}>
+            <Button variant="contained" onClick={() => setVerified(true)}>
               Continuer
             </Button>
           )}
         </div>
       )}
-      {ready && step === 2 && (
+      {/* {ready && step === 2 && (
         <div className="center-wrapper">
           <br />
           <Typography variant="h5">{`Impressionnant ${name} !`}</Typography>
@@ -193,11 +192,12 @@ export const VerifyID = () => {
           <Typography>Votre identité est désormais confirmée.</Typography>
 
           <br />
+
           <Button variant="contained" onClick={() => setVerified(true)} startIcon={<Lock />}>
             Continuer de manière sécurisé
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
